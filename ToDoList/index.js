@@ -1,38 +1,43 @@
-//traemos los elementos del DOM
+//Seleccionamos los elementos del DOM
 
-const input = document.getElementById("tareaInput");
-const btnAgregar = document.getElementById("agregarBtn");
-const lista = document.getElementById("listaTareas");
+const tareaInput = document.getElementById("tareaInput"); // Input para agregar tareas
+const agregarBtn = document.getElementById("agregarBtn"); // Botón para agregar tareas
+const listaTareas = document.getElementById("listaTareas"); // Lista de tareas
 
-
-//Agregamos los eventos
-btnAgregar.addEventListener("click", agregarTarea);
-btnCompletar.addEventListener("click", completarTarea);
-
-//Funciones
-
-
+// Función para agregar una nueva tarea
 function agregarTarea() {
-  const tarea = input.value;
-  if (tarea === "") {
-    alert("Debes escribir una tarea");
-    return;
+  // Obtener valor del input
+  const textoTarea = tareaInput.value.trim();
+
+  // Verificamos que el input no está vacío
+  if (textoTarea !== "") {
+    // Creamos elemento <li> para la tarea
+    const li = document.createElement("li");
+
+    // Agregamos el texto de la tarea al <li>
+    li.textContent = textoTarea;
+
+    // Creamos un botón de la tarea a completar
+    const completarBtn = document.createElement("button");
+    completarBtn.textContent = "Completada";
+    completarBtn.addEventListener("click", () => {
+      // subrayamos la tarea completada
+      li.classList.toggle("completada");
+    });
+
+    // Agregar el botón al <li>
+    li.appendChild(completarBtn);
+
+    // Agregar el <li> a la lista de tareas
+    listaTareas.appendChild(li);
+
+    // Limpiar el input después de agregar la tarea
+    tareaInput.value = "";
+  } else {
+    alert("Por favor, ingresa una tarea válida");
   }
-  const li = document.createElement("li");
-  li.textContent = tarea;
-  lista.appendChild(li);
-  input.value = "";
-
-  const btnCompletar = document.createElement("button");
-  btnCompletar.textContent = "✓";
-
-  li.appendChild(btnCompletar);
-  lista.appendChild(li);
-  input.value = "";
-
 }
 
-function completarTarea(event) {
-  const li = event.target.parentElement.remove();
-  li.style.backgroundColor = "green";
-}
+// Evento para agregar una tarea al hacer clic en el botón
+agregarBtn.addEventListener("click", agregarTarea);
+
