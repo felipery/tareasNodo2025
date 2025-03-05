@@ -1,37 +1,43 @@
 //Seleccionamos los elementos del DOM
 
-const tareaInput = document.getElementById("tareaInput"); // Input para agregar tareas
-const agregarBtn = document.getElementById("agregarBtn"); // Botón para agregar tareas
+const tareaInput = document.getElementById("tareaInput"); // agregar tareas
+const agregarBtn = document.getElementById("agregarBtn"); // agregar tareas
 const listaTareas = document.getElementById("listaTareas"); // Lista de tareas
 
 // Función para agregar una nueva tarea
+
+
 function agregarTarea() {
-  // Obtener valor del input
+  // Obtengo valor del input
   const textoTarea = tareaInput.value.trim();
 
   // Verificamos que el input no está vacío
+
   if (textoTarea !== "") {
-    // Creamos elemento <li> para la tarea
     const li = document.createElement("li");
-
-    // Agregamos el texto de la tarea al <li>
     li.textContent = textoTarea;
+    listaTareas.appendChild(li);
 
-    // Creamos un botón de la tarea a completar
     const completarBtn = document.createElement("button");
-    completarBtn.textContent = "Completada";
+    completarBtn.textContent = "🗸";
+    completarBtn.classList.add("completar");
+
     completarBtn.addEventListener("click", () => {
-      // subrayamos la tarea completada
       li.classList.toggle("completada");
     });
 
-    // Agregar el botón al <li>
     li.appendChild(completarBtn);
 
-    // Agregar el <li> a la lista de tareas
-    listaTareas.appendChild(li);
+    const eliminarBtn = document.createElement("button");
+    eliminarBtn.textContent = "𐄂";
+    eliminarBtn.classList.add("eliminar");
 
-    // Limpiar el input después de agregar la tarea
+    li.appendChild(eliminarBtn);
+
+    eliminarBtn.addEventListener("click", () => {
+      listaTareas.removeChild(li);
+    });
+
     tareaInput.value = "";
   } else {
     alert("Por favor, ingresa una tarea válida");
@@ -40,4 +46,3 @@ function agregarTarea() {
 
 // Evento para agregar una tarea al hacer clic en el botón
 agregarBtn.addEventListener("click", agregarTarea);
-
